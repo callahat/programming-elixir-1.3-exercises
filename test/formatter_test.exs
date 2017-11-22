@@ -33,12 +33,6 @@ defmodule FormatterTest do
     assert F.header_bar(["a  ", "bbb", "1234"]) == "----+-----+-----"
   end
 
-  test "columns_to_rows" do
-    assert F.columns_to_rows( 
-        [["r1 c1", "r2 c1"], ["r1 c2", "r2 c2"], ["r1 c3", "r2 c3"]] 
-   ) == [["r1 c1", "r1 c2", "r1 c3"], ["r2 c1", "r2 c2", "r2 c3"]]
-  end
-
   test "Output is correct" do
     result = capture_io fn ->
       F.print_table_for_columns(simple_test_data(),headers())

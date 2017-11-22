@@ -8,7 +8,8 @@ defmodule Issues.Formatter do
   def print_table_for_columns(issues_list, columns) do
     split_into_columns(issues_list,columns)
     |> right_pad
-    |> columns_to_rows
+    |> List.zip
+    |> Enum.map(&Tuple.to_list/1)
     |> print_table
   end
 
@@ -47,14 +48,4 @@ defmodule Issues.Formatter do
     print_row_data tail
   end
   def print_row_data([]), do: :ok
-
-  def columns_to_rows(columns) do
-    row_count = List.first(columns) |> length
-    Enum.flat_map(columns, fn x -> x end)
-    |> Enum.with_index
-    |> Enum.group_by(fn {_, index} -> rem(index, row_count) end )
-    |> Enum.map(fn {_,rows_with_index} -> rows_with_index end)
-    |> Enum.map(fn rows_with_index -> for {row,_} <- rows_with_index, do: row end)
-  end
-
 end
