@@ -39,13 +39,13 @@ defmodule Issues.Formatter do
   end
 
   def header_bar(header_row) do
-    Enum.map(header_row, fn header -> String.duplicate("-", String.length(header)) end )
+    for(header <- header_row, do: String.duplicate("-", String.length(header)))
     |> Enum.join("-+-")
   end
 
-  def print_row_data([ head | tail ]) do
+  defp print_row_data([ head | tail ]) do
     IO.puts(Enum.join(head, " | "))
     print_row_data tail
   end
-  def print_row_data([]), do: :ok
+  defp print_row_data([]), do: :ok
 end
