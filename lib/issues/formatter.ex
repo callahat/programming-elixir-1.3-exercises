@@ -1,5 +1,7 @@
 defmodule Issues.Formatter do
 
+  import Enum, only: [ map: 2, join: 2, max: 1 ]
+
   @moduledoc """
   Format a list of Github issues into a simple text table
   for the given columns.
@@ -9,7 +11,7 @@ defmodule Issues.Formatter do
     split_into_columns(issues_list,columns)
     |> right_pad
     |> List.zip
-    |> Enum.map(&Tuple.to_list/1)
+    |> map(&Tuple.to_list/1)
     |> print_table
   end
 
@@ -24,7 +26,7 @@ defmodule Issues.Formatter do
 
   def right_pad(column_data) do
     for column <- column_data do
-      right_pad_helper(column, Enum.map(column, &String.length/1) |> Enum.max )
+      right_pad_helper(column, map(column, &String.length/1) |> max )
     end
   end
 
@@ -33,18 +35,18 @@ defmodule Issues.Formatter do
   end
 
   def print_table([header | data_rows]) do
-    IO.puts(Enum.join(header, " | "))
+    IO.puts(join(header, " | "))
     IO.puts(header_bar(header))
     print_row_data(data_rows)
   end
 
   def header_bar(header_row) do
     for(header <- header_row, do: String.duplicate("-", String.length(header)))
-    |> Enum.join("-+-")
+    |> join("-+-")
   end
 
   defp print_row_data([ head | tail ]) do
-    IO.puts(Enum.join(head, " | "))
+    IO.puts(join(head, " | "))
     print_row_data tail
   end
   defp print_row_data([]), do: :ok
