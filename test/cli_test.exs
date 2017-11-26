@@ -1,7 +1,6 @@
 defmodule CliTest do
   use ExUnit.Case
   import ExUnit.CaptureIO
-  import SweetXml
   doctest Weather.CLI
 
   import Weather.CLI, only: [ parse_args: 1, format_for: 1, format: 1 ]
@@ -21,7 +20,7 @@ defmodule CliTest do
 
   test "format" do
     result = capture_io fn ->
-      format sample_stats
+      format sample_stats()
     end
 
     assert result == """

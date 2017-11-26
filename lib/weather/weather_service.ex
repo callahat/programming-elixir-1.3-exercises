@@ -7,6 +7,18 @@ defmodule Weather.WeatherService do
   @weather_url Application.get_env(:weather, :weather_url)
   @weather_xsd_url Application.get_env(:weather, :weather_xsd_url)
 
+  @nondisplayable_fields ~w{
+    credit_URL
+    two_day_history_url
+    image
+    ob_url
+    copyright_url
+    privacy_policy_url
+    disclaimer_url
+    icon_url_base
+    icon_url_name
+  }c
+
   @moduledoc """
   Retrieve the weather XML from the datasource.
   """
@@ -25,6 +37,8 @@ defmodule Weather.WeatherService do
     |> handle_response
     |> decode_response
     |> xmap(current_observation_field_mapper())
+    |> Enum.reject(fn {_,value} -> value == nil end)
+    |> Enum.into(%{})
   end
   
   @doc """
@@ -71,12 +85,16 @@ defmodule Weather.WeatherService do
   defp extract_current_observation_field_mapper(xml) do
     xpath(xml, ~x"//*[contains(@name,'current')]//xsd:element/@name"l)
     |> Enum.reduce( %{}, fn elem, acc -> Map.put(acc, elem, ~x"//#{elem}/text()") end)
-    |> Map.to_list
+    |> Enum.reject(fn {field, _} -> field_nondisplayable?(field) end)
   end
 
   defp decode_response({:ok, body}), do: body
   defp decode_response({:error, error}) do
     IO.puts "Error fetching data: #{error}"
     System.halt(2)
+  end
+
+  defp field_nondisplayable?(field) do
+    Enum.member?(@nondisplayable_fields,field)
   end
 end
