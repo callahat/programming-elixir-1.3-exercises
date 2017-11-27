@@ -1,0 +1,23 @@
+defmodule Goop8 do
+  def sum(0), do: 0
+  def sum(n), do: n + sum(n-1)
+  
+  def gcd(x,0), do: x
+  def gcd(x,y), do: gcd(y,rem(x,y))
+end 
+
+authors = [
+%{name: "Matz", language: "Rubby"},
+%{name: "jose", language: "lixer"},
+%{name: "Larold", language: "Peril"}
+]
+
+lang_with_r = fn :get, collection, next_fn ->
+  for row <- collection do
+    if String.contains?(row.language, "r") do
+      next_fn.(row)
+    end
+  end
+end
+
+get_in authors, [lang_with_r, :name]
