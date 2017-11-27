@@ -3,9 +3,11 @@ defmodule Issues.Mixfile do
 
   def project do
     [app: :issues,
-     escript: escript_config,
+     escript: escript_config(),
      version: "0.1.0",
      elixir: "~> 1.4",
+     name: "Issues",
+     source_url: "https://github.com/pragdave/issues",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps()]
@@ -31,7 +33,9 @@ defmodule Issues.Mixfile do
   defp deps do
     [  
         httpoison: "~> 0.9",
-        poison:    "~> 2.2"
+        poison:    "~> 2.2",
+        ex_doc:    "~> 0.12",
+        earmark:   "~> 1.0"
     ]
   end
 
