@@ -1,22 +1,12 @@
-defmodule Issues.Mixfile do
+defmodule Stats.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :issues,
-     escript: escript_config(),
+    [app: :stats,
      version: "0.1.0",
      elixir: "~> 1.4",
-     name: "Issues",
-     source_url: "https://github.com/pragdave/issues",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     test_coverage: [tool: ExCoveralls],
-     preferred_cli_env: [
-       "coveralls": :test,
-       "coveralls.detail": :test,
-       "coveralls.post": :test,
-       "coveralls.html": :test
-     ],
      deps: deps()]
   end
 
@@ -25,7 +15,7 @@ defmodule Issues.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger, :httpoison]]
+    [extra_applications: [:logger]]
   end
 
   # Dependencies can be Hex packages:
@@ -38,16 +28,9 @@ defmodule Issues.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [  
-        httpoison: "~> 0.9",
-        poison:    "~> 2.2",
-        ex_doc:    "~> 0.12",
-        earmark:   "~> 1.0",
-        excoveralls: "~> 0.5"
+    [
+      { :triq, "~> 1.0", only: :test },
+      { :excheck, "~> 0.5.0", only: :test }
     ]
-  end
-
-  defp escript_config do
-    [ main_module: Issues.CLI ]
   end
 end
