@@ -18,6 +18,19 @@ defmodule Weather.CLI do
   If not supplied, KMGY will be returned.
 
   Returns a string of `<airport symbol>`, or :help if help was given
+
+
+  ## Examples
+
+      iex> Weather.CLI.parse_args []
+      "KMGY"
+
+      iex> Weather.CLI.parse_args ["Wwww"]
+      "WWWW"
+
+      iex> Weather.CLI.parse_args ["--help"]
+      :help
+
   """
   def parse_args(argv) do
     parse = OptionParser.parse(argv, switches: [ help: :boolean],
