@@ -4,8 +4,12 @@ defmodule Ticker do
   @name     :ticker
 
   def start do
-    pid = spawn(__MODULE__, :generator, [[]])
-    :global.register_name(@name, pid)
+    if :global.whereis_name(@name) == :undefined do
+      pid = spawn(__MODULE__, :generator, [[]])
+      :global.register_name(@name, pid)
+    else
+      IO.puts "Ticker server already running #{ inspect :global.whereis_name(:ticker)}"
+    end
   end
 
   def register(client_pid) do
