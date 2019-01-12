@@ -9,6 +9,13 @@ defmodule Weather.Mixfile do
      escript: escript_config(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     test_coverage: [tool: ExCoveralls],
+     preferred_cli_env: [
+       "coveralls": :test,
+       "coveralls.detail": :test,
+       "coveralls.post": :test,
+       "coveralls.html": :test
+     ],
      deps: deps()]
   end
 
@@ -31,10 +38,11 @@ defmodule Weather.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:httpoison, "~> 0.9"},
-      {:sweet_xml, "~> 0.6"},
-      {:ex_doc,    "~> 0.12"},
-      {:earmark,   "~> 1.0"}
+      {:httpoison,   "~> 0.9"},
+      {:sweet_xml,   "~> 0.6"},
+      {:ex_doc,      "~> 0.12"},
+      {:earmark,     "~> 1.0"},
+      {:excoveralls, "~> 0.5"}
     ]
   end
 

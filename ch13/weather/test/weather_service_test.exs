@@ -5,7 +5,7 @@ defmodule WeatherServiceTest do
   import Weather.WeatherService, only: [ airport_weather_url: 1, weather_xsd_url: 0 ]
 
   test "airport_weather_url" do
-    assert airport_weather_url("WWWW") == "http://w1.weather.gov/xml/current_obs/WWWW.xml"
+    assert airport_weather_url("WWWW") == "https://w1.weather.gov/xml/current_obs/WWWW.xml"
   end
 
   test "weather_xsd_url" do

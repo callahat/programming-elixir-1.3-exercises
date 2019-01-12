@@ -2,7 +2,7 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :weather, weather_url: "http://w1.weather.gov/xml/current_obs"
+config :weather, weather_url: "https://w1.weather.gov/xml/current_obs"
 config :weather, weather_xsd_url: "http://www.nws.noaa.gov/view/current_observation.xsd"
 
 config :logger, compile_time_purge_level: :info
