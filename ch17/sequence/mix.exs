@@ -17,7 +17,7 @@ defmodule Sequence.Mixfile do
     # Specify extra applications you'll use from Erlang/Elixir
     [extra_applications: [:logger],
      mod: {Sequence.Application, []},
-     env: [initial_number: 614],
+     env: [initial_number: {614, 2}],
      registered: [ Sequence.Server ] ]
   end
 

@@ -25,6 +25,10 @@ defmodule Sequence.Server do
     GenServer.cast(__MODULE__, {:increment_number, delta})
   end
 
+  def crash do
+    raise :boom
+  end
+
   # GenServer implementation
 
   def init(stash_pid) do
