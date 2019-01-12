@@ -3,7 +3,7 @@ defmodule Sequence.Mixfile do
 
   def project do
     [app: :sequence,
-     version: "0.1.0",
+     version: "0.4.0",
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -16,7 +16,9 @@ defmodule Sequence.Mixfile do
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
     [extra_applications: [:logger],
-     mod: {Sequence.Application, []}]
+     mod: {Sequence.Application, []},
+     env: [initial_number: {614, 2}],
+     registered: [ Sequence.Server ] ]
   end
 
   # Dependencies can be Hex packages:
@@ -29,6 +31,8 @@ defmodule Sequence.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:exrm, "~> 1.0.6"}
+    ]
   end
 end

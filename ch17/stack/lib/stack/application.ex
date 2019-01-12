@@ -7,6 +7,6 @@ defmodule Stack.Application do
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
-    {:ok, _pid} = Stack.Supervisor.start_link([9,"cat",5])
+    {:ok, _pid} = Stack.Supervisor.start_link(Application.get_env :stack, :initial_stack)
   end
 end
