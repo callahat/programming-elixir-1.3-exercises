@@ -17,11 +17,17 @@ defmodule Tracer do
       end
     end
   end
+
+  defmacro __using__(_opts) do
+    quote do
+      import Kernel,              except: [def: 2]
+      import unquote(__MODULE__), only:   [def: 2]
+    end
+  end
 end
 
 defmodule Test do
-  import Kernel, except: [def: 2]
-  import Tracer, only:   [def: 2]
+  use Tracer
 
   def puts_sum_three(a,b,c), do: IO.inspect(a+b+c)
   def add_list(list),        do: Enum.reduce(list, 0, &(&1+&2))
