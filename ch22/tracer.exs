@@ -10,7 +10,7 @@ defmodule Tracer do
     IO.ANSI.format [:blue, "#{name}", :white, "(", "#{dump_args(args)}", ")"], true
   end
 
-  defmacro def({:when, _, [definition={name, _, args}, _]}, do: content) do
+  def definer(definition={name,_,args}, content) do
     quote do
       Kernel.def(unquote(definition)) do
         IO.puts IO.ANSI.format [:cyan, "==> call:    #{Tracer.dump_defn(unquote(name), unquote(args))}"], true
@@ -20,15 +20,13 @@ defmodule Tracer do
       end
     end
   end
+
+  defmacro def({:when, _, [definition, _]}, do: content) do
+    Tracer.definer(definition, content)
+  end
+
   defmacro def(definition={name, _, args}, do: content) do
-    quote do
-      Kernel.def(unquote(definition)) do
-        IO.puts IO.ANSI.format [:cyan, "==> call:    #{Tracer.dump_defn(unquote(name), unquote(args))}"], true
-        result = unquote(content)
-        IO.puts IO.ANSI.format [:cyan, "<== result:  #{IO.ANSI.format [:green, "#{result}"], true}"], true
-        result
-      end
-    end
+    Tracer.definer(definition, content)
   end
 
   defmacro __using__(_opts) do
