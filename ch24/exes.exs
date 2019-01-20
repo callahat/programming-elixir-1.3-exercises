@@ -14,20 +14,18 @@ defmodule CsvSigil do
   ...> \"""
   [["1,", "2", "3"],["cat","mog"]]
   """
-  def sigil_v(lines, opts) do
-    _parse_csv(lines, opts)
-  end
+  def sigil_v(lines, []),  do: _parse_csv(lines)
+  def sigil_v(lines, 'h'), do: _parse_csv(lines) |> _merge_headers
 
   @doc"""
   Similar to ~v, but no interpolation performed
   """
-  def sigil_V(lines, opts) do
-    _parse_csv(lines, opts)
-  end
+  def sigil_V(lines, []),  do: _parse_csv(lines)
+  def sigil_V(lines, 'h'), do: _parse_csv(lines) |> _merge_headers
 
-  defp _parse_csv(lines, _opts) do
-    lines 
-    |> String.split("\n") 
+  defp _parse_csv(lines) do
+    lines
+    |> String.split("\n")
     |> Enum.map(&String.split(&1,","))
     |> Enum.map(&_strip_lists(&1))
     |> Enum.map(&_parse_numbers_in_list(&1))
@@ -53,5 +51,10 @@ defmodule CsvSigil do
     if Float.floor(number) == number,
     do:   trunc(number),
     else: number
+  end
+
+  defp _merge_headers([headers | data]) do
+    with atomized_headers = headers |> Enum.map(&String.to_atom(&1)),
+    do:  data |> Enum.map(&Enum.zip(atomized_headers, &1))
   end
 end
