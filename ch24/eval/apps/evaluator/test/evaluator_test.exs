@@ -33,7 +33,6 @@ defmodule EvaluatorTest do
   end
 
   defp run_test lines, output do
- IO.puts 'e'
     assert output, Evaluator.eval(lines)
   end
 end

@@ -6,7 +6,7 @@ defmodule LineSigil do
   ## Example
 
   iex> import LineSigil
-  nil
+  LineSigil
   iex> ~l\"""
   ...> one
   ...> duh
@@ -15,13 +15,13 @@ defmodule LineSigil do
   ["one", "duh", "tree"]
   """
   def sigil_l(lines, _opts) do
-    lines |> String.split("\n") |> Enum.map(&String.trim(&1))
+    lines |> String.trim |> String.split("\n") |> Enum.map(&String.trim(&1))
   end
 
   @doc"""
   Similar to ~l, but no interpolation performed
   """
   def sigil_L(lines, _opts) do
-    lines |> String.split("\n") |> Enum.map(&String.trim(&1))
+    lines |> String.trim |> String.split("\n") |> Enum.map(&String.trim(&1))
   end
 end
