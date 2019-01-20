@@ -38,8 +38,4 @@ defmodule Evaluator.Mixfile do
   defp deps do
     []
   end
-
-  defp deps(:test) do
-     [ { :line_sigil, path: "../line_sigil" } ] ++ deps(:default)
-  end
 end
